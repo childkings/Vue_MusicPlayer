@@ -1,19 +1,18 @@
 <template>
-  <div></div>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
 export default {
-  created () {
-    this.$http.get('/search?keywords=海阔天空', {
-      withCredentials: true
-    }).then(val => {
-      console.log(val)
-    })
-  }
 }
 </script>
 
 <style>
-
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 </style>
