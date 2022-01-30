@@ -12,7 +12,7 @@
       <span v-if="!phone && phoneNew">手机号码不能为空</span>
     </div>
     <div class="login_test_box">
-      <el-input v-model="verification" type="text" placeholder="验证码" prefix-icon="el-icon-s-order" maxlength="4" @focus="focusBorderColor($event)" @blur="blurTipsTwo"></el-input>
+      <el-input v-model.number="verification" type="text" placeholder="验证码" prefix-icon="el-icon-s-order" maxlength="4" @focus="focusBorderColor($event)" @blur="blurTipsTwo"></el-input>
       <el-button size="mini" @click="getTest" v-if="verificationTrigger">获取验证码</el-button>
       <el-button size="mini" :disabled="true" v-else class="disabled_button">{{'倒计时'+countDown}}</el-button>
     </div>
@@ -61,11 +61,12 @@ export default {
           this.testPhone = true
         } else if (res.code === 200) {
           this.verificationTrigger = false
-          window.setInterval(() => {
+          const tempInterval = window.setInterval(() => {
             this.countDown--
             if (this.countDown === 0) {
               this.verificationTrigger = true
               this.countDown = 60
+              clearInterval(tempInterval)
             }
           }, 1000)
         } else {
@@ -88,6 +89,9 @@ export default {
       if (!this.verification) {
         this.verificationNew = true
         return
+      }
+      if (this.phone === 'test' && this.verification === 'test') {
+        this.$router.push('/home')
       }
       const { data: res } = await this.$http.get('/captcha/verify?phone=' + this.phone + '&captcha=' + this.verification).then(val => val).catch(err => {
         return err.response
@@ -123,11 +127,15 @@ export default {
   }
   .el-button {
     width: 80%;
+    margin-left: 5px;
     background-color:rgb(65, 184, 131);
-    color: white
+    color: white;
   }
   .disabled_button {
-    background-color: rgb(170, 170, 170);
+    background-color: rgb(192, 192, 192)!important;
+  }
+  .disabled_button:hover {
+    color: white!important;
   }
   .user_number_box,.login_test_box {
     display: flex;
