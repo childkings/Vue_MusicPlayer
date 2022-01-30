@@ -5,7 +5,7 @@
     <div class="ball3"></div>
     <div class="ball4"></div>
     <div class="login" ref="loginBox">
-      <el-input v-model="input" placeholder="请输入内容"></el-input>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -14,14 +14,19 @@
 export default {
   data () {
     return {
-      input: ''
+    }
+  },
+  methods: {
+    move (e) {
+      e.stopPropagation()
+      this.$refs.loginBox.style.transform = 'translate(-50%,-50%) translateZ(20px) rotateX(' + -(e.pageY - this.$refs.loginBox.offsetTop) / 350 + 'deg) rotateY(' + (e.pageX - this.$refs.loginBox.offsetLeft) / 400 + 'deg)'
     }
   },
   mounted () {
-    window.addEventListener('mousemove', (e) => {
-      console.log(window)
-      this.$refs.loginBox.style.transform = 'translate(-50%,-50%) translateZ(20px) rotateX(' + e.layerY / 400 + 'deg) rotateY(' + e.layerX / 400 + 'deg)'
-    })
+    window.addEventListener('mousemove', this.move)
+  },
+  beforeDestroy () {
+    window.removeEventListener('mousemove', this.move)
   }
 }
 </script>
@@ -41,16 +46,17 @@ export default {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: rgb(246, 246, 246);
+  background: rgb(53, 73, 94);
+  background-image: linear-gradient(to top, rgb(93, 213, 200 ) , rgb(65, 184, 131));
   perspective: 400px;
   transform-style: preserve-3d;
   div[class^="ball"] {
     position: absolute;
     width: 100px;
     height: 100px;
-    background-color: rgb(92, 204, 201);
+    background-color: rgb(93, 213, 200);
     border-radius: 50%;
-    opacity: 20%;
+    opacity: .2;
   }
   div[class^="ball"]:nth-child(1) {
     top: 200px;
@@ -63,6 +69,7 @@ export default {
     bottom: 200px;
     left: 300px;
     animation: ball_bottom 2s linear infinite alternate;
+    background-image: linear-gradient(to right, rgb(93, 213, 200) , white);
   }
   div[class^="ball"]:nth-child(3) {
     width: 150px;
@@ -70,6 +77,7 @@ export default {
     top: 200px;
     right: 40px;
     animation: ball_top 2s linear infinite alternate;
+    background-image: linear-gradient(to right, rgb(93, 213, 200) , white);
   }
   div[class^="ball"]:nth-child(4) {
     width: 150px;
@@ -77,6 +85,7 @@ export default {
     bottom: 200px;
     right: 80px;
     animation: ball_bottom 2s linear infinite alternate alternate;
+    background-image: linear-gradient(to left, rgb(93, 213, 200) , white);
   }
   .login {
     position: absolute;
@@ -86,7 +95,7 @@ export default {
     height: 450px;
     border-radius: 8px;
     background: white url(../assets/newbg1.589fd28d.png) no-repeat bottom;
-    background-size: contain;
+    background-size: 100% 100px;
     box-shadow: 2px 2px 8px 1px rgb(179, 179, 179);
     transform: translate(-50%,-50%) translateZ(20px) rotateX(0deg);
   }
