@@ -1,5 +1,5 @@
 <template>
-  <h1>这里是home</h1>
+  <div></div>
 </template>
 
 <script>

@@ -5,7 +5,7 @@
     <div class="ball3"></div>
     <div class="ball4"></div>
     <div class="login" ref="loginBox">
-      <router-view></router-view>
+      <router-view ref="login"></router-view>
     </div>
   </div>
 </template>
@@ -20,13 +20,20 @@ export default {
     move (e) {
       e.stopPropagation()
       this.$refs.loginBox.style.transform = 'translate(-50%,-50%) translateZ(20px) rotateX(' + -(e.pageY - this.$refs.loginBox.offsetTop) / 350 + 'deg) rotateY(' + (e.pageX - this.$refs.loginBox.offsetLeft) / 400 + 'deg)'
+    },
+    enter (e) {
+      if (e.keyCode === 13) {
+        this.$refs.login.login()
+      }
     }
   },
   mounted () {
     window.addEventListener('mousemove', this.move)
+    window.addEventListener('keydown', this.enter)
   },
   beforeDestroy () {
     window.removeEventListener('mousemove', this.move)
+    window.removeEventListener('keydown', this.enter)
   }
 }
 </script>
