@@ -26,5 +26,21 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+router.beforeEach(function (to, from, next) {
+  if (to.fullPath === '/home') {
+    if (window.localStorage.getItem('token')) {
+      next()
+    } else {
+      next('/')
+    }
+  } else if (to.fullPath === '/login/mode1' || to.fullPath === '/login/mode2') {
+    if (window.localStorage.getItem('token')) {
+      next('/home')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 export default router

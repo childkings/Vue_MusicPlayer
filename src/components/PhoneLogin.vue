@@ -2,7 +2,7 @@
   <div class="container_child">
     <div class="logo">
         <img src="../assets/logo.png" alt="">
-        <div>VueMUCIS</div>
+        <div>VUEMUCIS</div>
     </div>
     <div class="user_number_box">
       <el-input v-model.number="phone" placeholder="输入网易云音乐手机号" prefix-icon="el-icon-mobile-phone" @focus="focusUserNumberBox($event)" @blur="blurTips"></el-input>
@@ -51,6 +51,9 @@ export default {
       this.phoneNew = false
       this.testPhone = false
     },
+    token () {
+      window.localStorage.setItem('token', true)
+    },
     async getTest () {
       this.testPhone = false
       this.phoneNew = true
@@ -91,7 +94,9 @@ export default {
         return
       }
       if (this.phone === 'test' && this.verification === 'test') {
+        this.token()
         this.$router.push('/home')
+        return
       }
       const { data: res } = await this.$http.get('/captcha/verify?phone=' + this.phone + '&captcha=' + this.verification).then(val => val).catch(err => {
         return err.response
@@ -100,6 +105,7 @@ export default {
         this.testVrification = true
       }
       if (res.data) {
+        this.token()
         this.$router.push('/home')
       }
     }

@@ -2,7 +2,7 @@
   <div class="container_child">
     <div class="logo">
         <img src="../assets/logo.png" alt="">
-        <div>VueMUCIS</div>
+        <div>VUEMUCIS</div>
     </div>
     <div class="user_number_box">
       <el-input v-model="email" placeholder="输入163网易邮箱" prefix-icon="el-icon-message" @focus="focusBorderColor($event)"></el-input>
