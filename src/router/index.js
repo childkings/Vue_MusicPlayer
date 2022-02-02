@@ -34,7 +34,7 @@ router.beforeEach(function (to, from, next) {
       next('/')
     }
   } else if (to.fullPath === '/login/mode1' || to.fullPath === '/login/mode2') {
-    if (window.localStorage.getItem('token')) {
+    if (window.localStorage.getItem('token') === true) {
       next('/home')
     } else {
       next()

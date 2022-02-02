@@ -106,7 +106,7 @@ export default {
           vertical-align: bottom;
         }
         span {
-          font-size: 15px;
+          font-size: 16px;
           color: rgb(53, 73, 94);
           font-weight: 700;
         }
