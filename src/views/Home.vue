@@ -1,6 +1,7 @@
 <template>
   <div>
     <component :is="header"></component>
+    <router-view></router-view>
   </div>
 </template>
 

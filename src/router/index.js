@@ -4,6 +4,7 @@ import Login from '@/views/Login.vue'
 import PhoneLogin from '@/components/PhoneLogin.vue'
 import EmailLogin from '@/components/EmailLogin.vue'
 import Home from '@/views/Home.vue'
+import Homepage from '@/components/Homepage.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,14 @@ const routes = [
       { path: 'mode2', component: EmailLogin }
     ]
   },
-  { path: '/home', component: Home }
+  {
+    path: '/home',
+    component: Home,
+    redirect: '/home/homepage',
+    children: [
+      { path: 'homepage', component: Homepage }
+    ]
+  }
 ]
 
 const router = new VueRouter({
