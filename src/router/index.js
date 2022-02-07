@@ -5,6 +5,7 @@ import PhoneLogin from '@/components/PhoneLogin.vue'
 import EmailLogin from '@/components/EmailLogin.vue'
 import Home from '@/views/Home.vue'
 import Homepage from '@/components/Homepage.vue'
+import Searchpage from '@/components/Searchpage.vue'
 
 Vue.use(VueRouter)
 
@@ -24,7 +25,8 @@ const routes = [
     component: Home,
     redirect: '/home/homepage',
     children: [
-      { path: 'homepage', component: Homepage }
+      { path: 'homepage', component: Homepage },
+      { path: 'searchpage', component: Searchpage }
     ]
   }
 ]
@@ -35,14 +37,18 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach(function (to, from, next) {
-  if (to.fullPath === '/home') {
+  if (to.fullPath === '/home/homepage' || to.fullPath === '/home/searchpage') {
     if (window.localStorage.getItem('token')) {
-      next()
+      if (from.fullPath === '/home/searchpage') {
+        next()
+      } else {
+        next()
+      }
     } else {
-      next('/')
+      next('/login')
     }
   } else if (to.fullPath === '/login/mode1' || to.fullPath === '/login/mode2') {
-    if (window.localStorage.getItem('token') === true) {
+    if (window.localStorage.getItem('token') === 'true') {
       next('/home')
     } else {
       next()

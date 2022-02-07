@@ -16,6 +16,8 @@ export default {
   },
   components: {
     MusicPlayer
+  },
+  async created () {
   }
 }
 </script>

@@ -9,7 +9,7 @@
         <label for="search">
           <span class="el-icon-search"></span>
         </label>
-        <input type="text" id="search">
+        <input type="text" id="search" v-model="search" @keydown.enter="searchEnter">
       </div>
       <div class="user">
         <div><img :src="portrait" alt=""><span>{{userName}}</span></div>
@@ -26,6 +26,14 @@ export default {
       search: null,
       portrait: null,
       userName: null
+    }
+  },
+  methods: {
+    async searchEnter () {
+      const { data: res } = await this.$http(`/search?keywords= ${this.search}`)
+      this.$store.commit('songsUpdate', res.result.songs)
+      this.$router.push('/home/searchpage')
+      this.search = null
     }
   },
   async created () {
