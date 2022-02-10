@@ -53,7 +53,6 @@ export default {
       this.$store.commit('audioMessageUpdate', res.result.songs[0])
     },
     singerSearch (item) {
-      console.log(item)
       Bus.$emit('getSingerList', item)
     }
   },
@@ -125,6 +124,7 @@ export default {
   border-style: solid;
   border-color: rgb(211, 211, 211);
   border-width: 0 1px 1px;
+  background-color: rgba(65, 184, 131,.2);
   .hot,.singer {
     display: flex;
     flex-direction: column;
@@ -132,6 +132,9 @@ export default {
     h4 {
       position: relative;
       margin-bottom: 10px;
+      -moz-user-select:none;
+      -webkit-user-select:none;
+      user-select:none;
       h5 {
       position:absolute;
       top: 0px;
@@ -143,7 +146,7 @@ export default {
     >div {
       margin: 10px 0;
       a {
-        color: rgb(53, 73, 94);
+        color: black;
         text-decoration: none;
       }
     }

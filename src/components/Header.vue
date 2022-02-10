@@ -122,6 +122,9 @@ export default {
           font-size: 16px;
           color: rgb(53, 73, 94);
           font-weight: 700;
+          -moz-user-select:none;
+          -webkit-user-select:none;
+          user-select:none;
         }
       }
     }

@@ -249,6 +249,9 @@ export default {
           padding-top: 7px;
           .music_message_top {
             display: flex;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+            user-select:none;
             >div:hover {
               text-decoration: underline;
             }
