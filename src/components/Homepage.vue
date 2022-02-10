@@ -64,13 +64,10 @@ export default {
     for (let i = 0; i < 10; i++) {
       this.rankListHot.push(rel.data[i])
     }
-    console.log(rel)
     const { data: rem } = await this.$http('/toplist/artist')
     for (let i = 0; i < 10; i++) {
       this.rankListSinger.push(rem.list.artists[i])
     }
-    const { data: rey } = await this.$http('/dj/program/toplist')
-    console.log(rey)
   }
 }
 </script>
