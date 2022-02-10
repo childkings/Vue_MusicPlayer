@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import Bus from '@/components/eventBus.js'
 export default {
   data () {
     return {
@@ -40,6 +41,9 @@ export default {
     const { data: res } = await this.$http('/user/detail?uid=32953014')
     this.portrait = res.profile.avatarUrl
     this.userName = res.profile.nickname
+    Bus.$on('getSingerList', (val) => {
+      console.log(val)
+    })
   }
 }
 </script>

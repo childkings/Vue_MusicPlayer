@@ -36,9 +36,9 @@
           </div>
         </div>
         <div class="volume">
-          <div class="el-icon-headset" @click="volumeStateChange"></div>
-          <div class="block">
-            <el-slider v-model="volume" v-if="volumeState"></el-slider>
+          <div class="el-icon-headset" @click="volumeStateTrue" v-if="volumeState===false"></div>
+          <div class="block" @mouseleave="volumeStateFalse">
+            <el-slider v-model="volume" :disabled="sliderState" v-if="volumeState" @input="volumeAction" @change="volumeActionEnd"></el-slider>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@ export default {
       author: 'null',
       interval: null,
       temp: 0,
-      volume: 50,
+      volume: 20,
       volumeState: false
     }
   },
@@ -85,8 +85,19 @@ export default {
     sliderAction (val) {
       this.$refs.audioPlayer.currentTime = val
     },
-    volumeStateChange () {
-      this.volumeState = !this.volumeState
+    volumeStateTrue () {
+      if (this.songState) {
+        this.volumeState = true
+      }
+    },
+    volumeStateFalse () {
+      this.volumeState = false
+    },
+    volumeAction (val) {
+      this.$refs.audioPlayer.volume = val / 100
+    },
+    volumeActionEnd () {
+      this.volumeState = false
     }
   },
   watch: {
@@ -136,7 +147,6 @@ export default {
     this.title = this.$store.getters.showAudioMessage.name
     this.author = this.$store.getters.showAudioMessage.artists[0].name
     this.sliderState = false
-    document.querySelector('.el-slider__runway').style.margin = 0
     document.querySelector('audio').addEventListener('durationchange', () => {
       this.songState = true
       this.audioNowTime = 0
@@ -144,6 +154,9 @@ export default {
       this.$refs.audioPlayer.volume = 0.2
     })
     if (this.volumeState) {
+      document.querySelectorAll('.el-slider__runway').forEach(val => {
+        val.style.margin = 0
+      })
       document.querySelectorAll('.el-slider__bar').forEach(val => {
         val.style.backgroundColor = 'rgb(2, 114, 64)'
       })
@@ -172,7 +185,7 @@ export default {
   height: 50px;
   z-index: 999;
   opacity: .95;
-  // margin-bottom: -25px;
+  margin-bottom: -30px;
   transition: margin .7s;
   .music_box {
     display: flex;
@@ -277,16 +290,17 @@ export default {
       }
       .volume {
         flex:1;
-        height: 100%;
+        height: 20px;
         position: relative;
         color: white;
         .block {
-          margin-top: 17px;
-          margin-left: 10px;
+          height: 15px;
+          padding: 3px;
+          padding-left: 5px;
+          margin-top: 10px;
         }
         .el-icon-headset {
-          position: absolute;
-          top: 25px;
+          margin-top: 5px;
           font-size: 20px;
           color: rgb(90, 250, 178);
         }
