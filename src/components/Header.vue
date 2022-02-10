@@ -9,7 +9,7 @@
         <label for="search">
           <span class="el-icon-search"></span>
         </label>
-        <input type="text" id="search" v-model="search" @keydown.enter="searchEnter">
+        <input type="text" id="search" v-model="search" @keydown.enter="searchEnter" ref="search">
       </div>
       <div class="user">
         <div><img :src="portrait" alt=""><span>{{userName}}</span></div>
@@ -42,7 +42,8 @@ export default {
     this.portrait = res.profile.avatarUrl
     this.userName = res.profile.nickname
     Bus.$on('getSingerList', (val) => {
-      console.log(val)
+      this.search = val
+      this.searchEnter()
     })
   }
 }

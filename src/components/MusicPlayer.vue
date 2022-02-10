@@ -112,6 +112,7 @@ export default {
       if (this.$refs.audioPlayer.ended) {
         this.audioNowTime = 0
         this.songState = false
+        this.play()
       }
       const newValFloor = Math.round(newVal)
       let temp = (newValFloor - (newValFloor % 60)) / 60

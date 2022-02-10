@@ -16,14 +16,13 @@
     </div>
     <div class="child_two">
       <div class="hot">
-        <h4>热门榜单</h4>
-        <h5>HOT</h5>
+        <h4>热门榜单<h5>HOT</h5></h4>
         <div v-for="(item,index) in rankListHot" :key="item.id" @click="rankListAudio(item.searchWord)">
           <a href="javascript:;"><span>{{index+1+'、'}}</span>{{item.searchWord}}</a>
         </div>
       </div>
       <div class="singer">
-        <h4>歌手榜单</h4>
+        <h4>歌手榜单<h5>Singer</h5></h4>
         <div v-for="(item,index) in rankListSinger" :key="item.id" @click="singerSearch(item.name)">
           <a href="javascript:;"><span>{{index+1+'、'}}</span>{{item.name}}</a>
         </div>
@@ -54,6 +53,7 @@ export default {
       this.$store.commit('audioMessageUpdate', res.result.songs[0])
     },
     singerSearch (item) {
+      console.log(item)
       Bus.$emit('getSingerList', item)
     }
   },
@@ -65,11 +65,13 @@ export default {
     for (let i = 0; i < 10; i++) {
       this.rankListHot.push(rel.data[i])
     }
+    console.log(rel)
     const { data: rem } = await this.$http('/toplist/artist')
-    console.log(rem)
     for (let i = 0; i < 10; i++) {
       this.rankListSinger.push(rem.list.artists[i])
     }
+    const { data: rey } = await this.$http('/dj/program/toplist')
+    console.log(rey)
   }
 }
 </script>
@@ -78,13 +80,6 @@ export default {
 .w {
   width: 1200px;
   margin: 0 auto;
-}
-.container_child::before,.container_child::after {
-  contain: "";
-  display: table;
-}
-.container_child::after {
-  clear: both;
 }
 .child_one {
   position: absolute;
@@ -119,10 +114,9 @@ export default {
 }
 .child_two {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 1080px;
-  height: 470px;
+  height: 500px;
   position: absolute;
   top: 460px;
   left: 50%;
@@ -132,17 +126,19 @@ export default {
   border-color: rgb(211, 211, 211);
   border-width: 0 1px 1px;
   .hot,.singer {
-    position: relative;
-    width: 1080px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     h4 {
+      position: relative;
       margin-bottom: 10px;
-    }
-    h5 {
+      h5 {
       position:absolute;
-      top: 0;
+      top: 0px;
       left: 70px;
       color: rgb(209, 41, 84);
       font-style:italic;
+    }
     }
     >div {
       margin: 10px 0;
@@ -154,6 +150,14 @@ export default {
     >div:hover {
       a {
         text-decoration: underline;
+      }
+    }
+  }
+  .singer {
+    h4 {
+      h5 {
+        font-size: 12px;
+        color: rgb(53, 73, 94);
       }
     }
   }
