@@ -31,9 +31,9 @@
 export default {
   data () {
     return {
-      phone: null,
+      phone: 'test',
       phoneNew: false,
-      verification: null,
+      verification: 'test',
       verificationNew: false,
       verificationTrigger: true,
       testPhone: false,
