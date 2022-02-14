@@ -1,6 +1,6 @@
 .DS_Store
 /dist
-node_modeles
+node_modeles/
 
 # local env files
 
