@@ -1,12 +1,12 @@
 <template>
   <div class="container_child w">
     <div class="block">
-      <div v-for="item in nowSongs" :key="item.id" class="song">
+      <div v-for="item in $store.getters.showNowSongs" :key="item.id" class="song">
           <a href="javascript:;" @click="getAudioMessage(item)">{{item.name}}<span></span></a><span><span>by.</span>{{item.artists[0].name}}</span>
       </div>
       <el-pagination
         layout="prev, pager, next"
-        :total="songs.length"
+        :total="$store.getters.showSongs.length"
         :page-size="10"
         @current-change="computedSongs"
       >
@@ -20,46 +20,15 @@
 export default {
   data () {
     return {
-      songs: [],
-      nowSongs: [],
-      currentPage: 1
+      songs: []
     }
   },
   methods: {
     computedSongs (val) {
-      this.nowSongs = []
-      if (val - this.currentPage > 0) {
-        if (this.songs.length - val * 10 >= 0) {
-          for (let i = (val - 1) * 10; i < val * 10; i++) {
-            this.nowSongs.push(this.songs[i])
-          }
-        } else {
-          for (let i = (val - 1) * 10; i < (this.songs.length - (val - 1) * 10) + (val - 1) * 10; i++) {
-            this.nowSongs.push(this.songs[i])
-          }
-        }
-        this.currentPage = val
-      } else if (val - this.currentPage < 0) {
-        for (let i = (val - 1) * 10; i < val * 10; i++) {
-          this.nowSongs.push(this.songs[i])
-        }
-        this.currentPage = val
-      }
+      this.$store.commit('computedNowSongs', val)
     },
     getAudioMessage (item) {
       this.$store.commit('audioMessageUpdate', item)
-    }
-  },
-  created () {
-    this.songs = this.$store.state.songs
-    if (this.songs.length >= 10) {
-      for (let i = 0; i < 10; i++) {
-        this.nowSongs.push(this.songs[i])
-      }
-    } else {
-      for (let i = 0; i < this.songs.length; i++) {
-        this.nowSongs.push(this.songs[i])
-      }
     }
   },
   mounted () {
@@ -75,7 +44,6 @@ export default {
       if (val.classList[1]) {
         val.style.color = 'rgb(65, 184, 131)'
       } else {
-        console.log(11)
         val.style.color = 'rgb(53, 73, 94 )'
       }
     })

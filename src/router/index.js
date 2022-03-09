@@ -39,8 +39,7 @@ const router = new VueRouter({
 router.beforeEach(function (to, from, next) {
   if (to.fullPath === '/home/homepage' || to.fullPath === '/home/searchpage') {
     if (window.localStorage.getItem('token')) {
-      if (from.fullPath === '/home/searchpage') {
-        next()
+      if (from.fullPath === '/home/searchpage' && to.fullPath === '/home/searchpage') {
       } else {
         next()
       }
